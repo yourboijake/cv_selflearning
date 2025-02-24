@@ -1,0 +1,6 @@
+https://www.kaggle.com/datasets/naderabdalghani/iam-handwritten-forms-dataset?resource=download
+
+Handwritten OCR detection:
+- 
+
+
