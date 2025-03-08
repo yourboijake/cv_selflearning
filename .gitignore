@@ -1,2 +1,4 @@
 .ipynb_checkpoints/
 df.parquet.gzip
+.git/
+mnist/
