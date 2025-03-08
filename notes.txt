@@ -1,6 +1,50 @@
 dataset: https://huggingface.co/datasets/Teklia/IAM-line
 
 Learning OCR:
+
+Stanford CV course notes on convnets:
+- https://cs231n.stanford.edu/2016/
+- https://www.youtube.com/watch?v=vT1JzLTH4G4&list=PL5bk6bMszYIe30ViQqR5-cJcGqJXXJigw
+
+Justin Johnson CV and DL for CV at UMich:
+- https://web.eecs.umich.edu/~justincj/teaching/eecs498/WI2022/
+- https://web.eecs.umich.edu/~justincj/teaching/eecs442/WI2020/
+- https://web.eecs.umich.edu/~justincj/
+
+LeNet5:
 - https://axon.cs.byu.edu/~martinez/classes/678/Papers/Convolution_nets.pdf
+- want to avoid hand-coded feature prep, instead train system end-to-end
+- convnets useful for shifts caused by image normalization, and for reducing size of network
+- convolution then subsampling:
+    - model architecture has convolutionlayer --> subsampling layer --> conv layer --> subsamp layer
+    - key differences: subsampling layer doesn't slide, performs a fixed simple averaging function, not a trainable conv kernel
+    - subsampling layers still use biases and activation funcs, and multiplies the averaged values by trainable weight
+    - additionally, the number of feature maps in subsampling layer matches the nmber in the preceding conv layer (since the subsampling conv kernel is just uniform averaging, there is no additional information provided by adding new feature maps in subsampling layer)
+    - note: the output of a conv layer with input shape NxN is MxM where M = (N - K + 1) / S, where K is size of conv sliding window (KxK), and S is the stride of the window. On the other hand, the output of subsampling layer with input shape NxN is (N/S)x(N/S), where averaging is done over an SxS window
+- model architecture continually reduces resolution through convolution and subsampling, while increasing representational richness by increasing number of feature maps
+- LeNet5 specs: 
+    - 60k trainable params across 7 layers
+    - input is 32x32 image (MNIST), pixel-value normalized to mu = 0, var = 1
+    - layer 1; C1 is 5x5 convs (25 weights), 6 feature maps, and a bias param for each feature map = 25 * 6 + 6 = 156 trainable params. It's output is 6 28x28 matrices
+    - layer 2: S2 is 2x2 average over C1's output for each of the 6 feature maps. Each of the resulting values in each of the 6 feature maps is multiplied by a trainable coefficient and added to a trainable bias, for 12 trainable params. The output is 6 14x14 matrices
+    - layer 3: C3 is 5x5 convs for 16 feature maps. Each 5x5 window is connected to an identical location across a subset of the 6 input feature maps (table shown in paper explains this sparse connectivity). This helps reinforce that different feature maps learn different features and helps reduce computational load of training. Separate conv kernel for each set of inputs for each of the 16 feature maps, ends up with 450 + 600 + 300 + 150 conv kernel weights, + 16 biases (1 for each feature map), 1516 trainable params
+    - layer 4: S4 is 2x2 average over C3's output. 1 coeff and 1 bias for each of 16 feature maps = 32 trainable params
+    - layer 5: C5 is 5x5 convs, connected to each of the 16 feature maps from S4 (like a fully connected layer, but only because input size is 32x32. If it were larger, this would not be a 1x1 layer). it has 120 feature maps, so 120 * 16 * 5 * 5 conv kernel weights + 120 biases = 48120 trainable params
+    - layer 6: F6 is a fully connected layer to C5's output. it's output shape is 84, so it has 120 * 84 weights + 84 biases = 10164 trainable params
+    - layer 7: output layer accepts 84 fully connected inputs after tanh normalization from F6. It then computes the euclidean distance between the values and the "parameter" vecto, which is an idealized representation of the character (bit-mapped ASCII char)
+    - uses special tanh activation function: f(a) = 1.7159tanh(S * a) (what is S?, rationale in Appendix A)
+
+Special Eval function:
+- rather than assigning loss based on probability assigned to the ground truth output value, LeNet5 assigns loss in the output layer using the Euclidean distances between each value in an 84-dim vector. This vector is compared against a 7x12 (84) dim bitmapped image of the correct ASCII character
+- this has advantages by allowing the output of the model to show which idealized ASCII characters the input is most similar to, accommodating messy handwriting and slurring of multiple characters together.
+- the loss is sum of (xi - yi)^2 over all the 84 elements, so the model is trained to "morph" or "transform" the input image into an idealized ASCII bitmap
+- in the paper the authors label this the Euclidean RBF, although it is simply sum of squares. The optimized loss function is the mean of this sum of squares (mean squared error). 
+- however, this would allow the model to "hack" the reward function. To avoid, authors include a new term in the loss function: P*log(e^-j + sum(e^-yi over 84 dim)). P is number of classes, j is a constant, and sum over yi is the sum over the 84 RBF values from F6.
+
+Datasets and Eval:
+- trained on single digits with MNIST, LeNet5 and similar models outperform
+
+
+
 
 
