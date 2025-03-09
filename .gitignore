@@ -2,3 +2,4 @@
 df.parquet.gzip
 .git/
 mnist/
+emnist/
