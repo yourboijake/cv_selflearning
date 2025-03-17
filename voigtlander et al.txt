@@ -1,0 +1,32 @@
+Handwriting Recognition with Large Multidimensional Long Short-Term Memory Recurrent Neural Networks
+Paul Voigtlaender, Patrick Doetsch, Hermann Ney
+https://www.vision.rwth-aachen.de/media/papers/MDLSTM_final.pdf
+
+use LSTMs for handwriting recognition
+- RNNs can, in principle, accept an arbitrarily large input, and LSTMs in particular can hold information for a longer period of time, allowing them to avoid vanishing or exploding gradients
+- paper deals with a particular kind of LSTM for recognizing handwritten text: multidimensional long short-term memory recurrent neural networks (MDLSTM-RNNs)
+- traditional LSTM only uses recurrence over a single dimension (in this case, the x axis of the image). MDLSTMs allow recurrence over both axes of 2D image (x and y)
+- my study game plan: learn enough about RNN's to learn what they are, then LSTMs over 1D, then LSTMs over 2D
+- this paper covers the usage of these MDLSTM techniques with GPU implementations for performance
+
+REVIEW OF RNNs:
+- Recurrent Connection: The hidden state at time t (h_t) receives input from both the current input (x_t) and the previous hidden state (h_t-1).
+- Shared Parameters: The same weights (Wxh, Whh, Why) are used at each time step, allowing the network to handle sequences of varying lengths.
+- Hidden State: Acts as the "memory" of the network, maintaining information from previous time steps.
+- Forward Propagation: For each time step:
+    - h_t = tanh(Wxh·x_t + Whh·h_t-1 + bh)
+    - y_t = Why·h_t + by
+- Backpropagation Through Time (BPTT): RNNs are trained by unrolling the network through time and applying backpropagation, calculating gradients for each time step.
+
+LSTMs:
+- a subtype of RNNs, designed to mitigate vanishing gradient problem
+- maintains hidden state and "cell state", and uses the cell state to selectively remember or "forget" certain data
+- 3 gates regulating information flow (brackets are vector concatenation, where [R^m, R^n] --> R^(m*n)):
+    - Forget Gate: Formula: f_t = σ(W_f · [h_t-1, x_t] + b_f), Outputs values between 0 and 1, where 0 means "forget completely" and 1 means "keep completely"
+    - Input Gate (i): Regulates what new information is stored in the cell state, Formula: i_t = σ(W_i · [h_t-1, x_t] + b_i)
+    - Output Gate (o): Controls what parts of the cell state are output to the hidden state, Formula: o_t = σ(W_o · [h_t-1, x_t] + b_o)
+- additionally creates a new candidate cell state, and uses that to update the ongoing cell state
+- Cell candidate formula: Formula: c̃_t = tanh(W_c · [h_t-1, x_t] + b_c)
+- performs state updates on both cell state (using cell candidate) and hidden state (using h_t-1 and gates)
+    - Cell state update: Formula: c_t = f_t * c_t-1 + i_t * c̃_t, First part (f_t * c_t-1) forgets unneeded information, Second part (i_t * c̃_t) adds new information
+    - Hidden State Update, Formula: h_t = o_t * tanh(c_t). Filtered version of the cell state processed through the output gate. This becomes the output for the current time step and part of the input for the next time step

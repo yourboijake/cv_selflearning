@@ -1,0 +1,5 @@
+paper title: Attention-Based Models for Speech Recognition
+https://arxiv.org/pdf/1506.07503
+- authors propose transcription of human speech audio data (speech recognition) is a good challenging test case for attention-based methods, because it involves long, noisy inputs (thousands of audio frames, with large variation in inputs corresponding with the same desired outputs)
+- dominant approach at the time (2015) still very hand-crafted hybrid approach: deep neural acoustic model, triphone hidden markov model, and n-gram model
+
