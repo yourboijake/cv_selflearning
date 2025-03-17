@@ -1,0 +1,9 @@
+Neural Turing Machines, https://arxiv.org/pdf/1410.5401
+
+tapeagents: https://arxiv.org/abs/2412.08445
+
+memory networks: https://arxiv.org/abs/1410.3916
+
+
+Sequence to Sequence Learning with Neural Networks
+ https://arxiv.org/abs/1409.3215

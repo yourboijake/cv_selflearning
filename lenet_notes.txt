@@ -45,6 +45,12 @@ Datasets and Eval:
 - trained on single digits with MNIST, LeNet5 and similar models outperform
 
 
+MULTIMODULE SYSTEMS AND GRAPH TRANSFORMER NETWORKS
+- this section of the paper is where authors extend to entire handwritten sequences
+- object-oriented programming offers a useful approach, because each component of modular system can be its own class
+- limitations of traditional ML features: they are fixed-size vectors, which makes it difficult to accomodate variable-sized inputs (natural language speech, handwritten text, video data)
+- modules in a GTN are pieces of the network, and they communicate information to one another through their arcs
+- segmentation graph: used to create "candidate" cuts to separate out characters from source data
 
 
 
