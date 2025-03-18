@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+  <!-- Background -->
+  <rect width="800" height="500" fill="white"/>
+  
+  <!-- LSTM Cell (t-1) -->
+  <rect x="50" y="150" width="200" height="200" rx="10" fill="#ECECFE" stroke="#4A4A8F" stroke-width="2"/>
+  <text x="150" y="135" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="14">LSTM Cell (t-1)</text>
+  
+  <!-- LSTM Cell (t) -->
+  <rect x="300" y="150" width="200" height="200" rx="10" fill="#ECECFE" stroke="#4A4A8F" stroke-width="2"/>
+  <text x="400" y="135" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="14">LSTM Cell (t)</text>
+  
+  <!-- LSTM Cell (t+1) -->
+  <rect x="550" y="150" width="200" height="200" rx="10" fill="#ECECFE" stroke="#4A4A8F" stroke-width="2"/>
+  <text x="650" y="135" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="14">LSTM Cell (t+1)</text>
+
+  <!-- Cell States -->
+  <line x1="250" y1="180" x2="300" y2="180" stroke="#FF6B6B" stroke-width="3" marker-end="url(#arrowhead)"/>
+  <text x="275" y="170" text-anchor="middle" font-family="Arial" font-size="12">c(t-1)</text>
+  
+  <line x1="500" y1="180" x2="550" y2="180" stroke="#FF6B6B" stroke-width="3" marker-end="url(#arrowhead)"/>
+  <text x="525" y="170" text-anchor="middle" font-family="Arial" font-size="12">c(t)</text>
+  
+  <line x1="750" y1="180" x2="780" y2="180" stroke="#FF6B6B" stroke-width="3" marker-end="url(#arrowhead)"/>
+  <text x="765" y="170" text-anchor="middle" font-family="Arial" font-size="12">c(t+1)</text>
+  
+  <!-- Hidden States -->
+  <line x1="250" y1="280" x2="300" y2="280" stroke="#4ECDC4" stroke-width="3" marker-end="url(#arrowhead)"/>
+  <text x="275" y="300" text-anchor="middle" font-family="Arial" font-size="12">h(t-1)</text>
+  
+  <line x1="500" y1="280" x2="550" y2="280" stroke="#4ECDC4" stroke-width="3" marker-end="url(#arrowhead)"/>
+  <text x="525" y="300" text-anchor="middle" font-family="Arial" font-size="12">h(t)</text>
+  
+  <line x1="750" y1="280" x2="780" y2="280" stroke="#4ECDC4" stroke-width="3" marker-end="url(#arrowhead)"/>
+  <text x="765" y="300" text-anchor="middle" font-family="Arial" font-size="12">h(t+1)</text>
+  
+  <!-- Inputs -->
+  <line x1="150" y1="400" x2="150" y2="350" stroke="#FFD166" stroke-width="3" marker-end="url(#arrowhead)"/>
+  <text x="150" y="420" text-anchor="middle" font-family="Arial" font-size="12">x(t-1)</text>
+  
+  <line x1="400" y1="400" x2="400" y2="350" stroke="#FFD166" stroke-width="3" marker-end="url(#arrowhead)"/>
+  <text x="400" y="420" text-anchor="middle" font-family="Arial" font-size="12">x(t)</text>
+  
+  <line x1="650" y1="400" x2="650" y2="350" stroke="#FFD166" stroke-width="3" marker-end="url(#arrowhead)"/>
+  <text x="650" y="420" text-anchor="middle" font-family="Arial" font-size="12">x(t+1)</text>
+  
+  <!-- Outputs -->
+  <line x1="150" y1="150" x2="150" y2="100" stroke="#06D6A0" stroke-width="3" marker-end="url(#arrowhead)"/>
+  <text x="150" y="90" text-anchor="middle" font-family="Arial" font-size="12">y(t-1)</text>
+  
+  <line x1="400" y1="150" x2="400" y2="100" stroke="#06D6A0" stroke-width="3" marker-end="url(#arrowhead)"/>
+  <text x="400" y="90" text-anchor="middle" font-family="Arial" font-size="12">y(t)</text>
+  
+  <line x1="650" y1="150" x2="650" y2="100" stroke="#06D6A0" stroke-width="3" marker-end="url(#arrowhead)"/>
+  <text x="650" y="90" text-anchor="middle" font-family="Arial" font-size="12">y(t+1)</text>
+
+  <!-- Gates in Cell t -->
+  <rect x="320" y="190" width="45" height="30" rx="5" fill="#F2BAC9" stroke="#C7254E" stroke-width="1"/>
+  <text x="342.5" y="210" text-anchor="middle" font-family="Arial" font-size="10">forget</text>
+  
+  <rect x="377.5" y="190" width="45" height="30" rx="5" fill="#F2BAC9" stroke="#C7254E" stroke-width="1"/>
+  <text x="400" y="210" text-anchor="middle" font-family="Arial" font-size="10">input</text>
+  
+  <rect x="435" y="190" width="45" height="30" rx="5" fill="#F2BAC9" stroke="#C7254E" stroke-width="1"/>
+  <text x="457.5" y="210" text-anchor="middle" font-family="Arial" font-size="10">output</text>
+  
+  <circle cx="400" cy="250" r="15" fill="#B1E5F2" stroke="#29A6B8" stroke-width="1"/>
+  <text x="400" y="254" text-anchor="middle" font-family="Arial" font-size="12">tanh</text>
+  
+  <!-- Cell internals (simplified) -->
+  <text x="400" y="310" text-anchor="middle" font-family="Arial" font-style="italic" font-size="10">Gates control information flow</text>
+
+  <!-- Arrow definition -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon fill="black" points="0 0, 10 3.5, 0 7" />
+    </marker>
+  </defs>
+  
+  <!-- Legend -->
+  <rect x="600" y="40" width="180" height="80" rx="5" fill="white" stroke="black" stroke-width="1"/>
+  <text x="690" y="55" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="12">Legend</text>
+  
+  <line x1="610" y1="70" x2="630" y2="70" stroke="#FF6B6B" stroke-width="3"/>
+  <text x="685" y="73" text-anchor="middle" font-family="Arial" font-size="10">Cell State</text>
+  
+  <line x1="610" y1="90" x2="630" y2="90" stroke="#4ECDC4" stroke-width="3"/>
+  <text x="685" y="93" text-anchor="middle" font-family="Arial" font-size="10">Hidden State</text>
+  
+  <line x1="610" y1="110" x2="630" y2="110" stroke="#FFD166" stroke-width="3"/>
+  <text x="685" y="113" text-anchor="middle" font-family="Arial" font-size="10">Input/Output</text>
+</svg>

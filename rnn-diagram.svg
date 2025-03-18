@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300">
+  <!-- Background -->
+  <rect width="600" height="300" fill="white"/>
+  
+  <!-- Time step t-1 -->
+  <circle cx="100" cy="150" r="30" fill="#4299E1" stroke="#2C5282" stroke-width="2"/>
+  <text x="100" y="155" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold">h(t-1)</text>
+  
+  <!-- Time step t -->
+  <circle cx="300" cy="150" r="30" fill="#4299E1" stroke="#2C5282" stroke-width="2"/>
+  <text x="300" y="155" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold">h(t)</text>
+  
+  <!-- Time step t+1 -->
+  <circle cx="500" cy="150" r="30" fill="#4299E1" stroke="#2C5282" stroke-width="2"/>
+  <text x="500" y="155" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold">h(t+1)</text>
+  
+  <!-- Input nodes -->
+  <circle cx="100" cy="250" r="25" fill="#F6AD55" stroke="#C05621" stroke-width="2"/>
+  <text x="100" y="255" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold">x(t-1)</text>
+  
+  <circle cx="300" cy="250" r="25" fill="#F6AD55" stroke="#C05621" stroke-width="2"/>
+  <text x="300" y="255" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold">x(t)</text>
+  
+  <circle cx="500" cy="250" r="25" fill="#F6AD55" stroke="#C05621" stroke-width="2"/>
+  <text x="500" y="255" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold">x(t+1)</text>
+  
+  <!-- Output nodes -->
+  <circle cx="100" cy="50" r="25" fill="#68D391" stroke="#276749" stroke-width="2"/>
+  <text x="100" y="55" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold">y(t-1)</text>
+  
+  <circle cx="300" cy="50" r="25" fill="#68D391" stroke="#276749" stroke-width="2"/>
+  <text x="300" y="55" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold">y(t)</text>
+  
+  <circle cx="500" cy="50" r="25" fill="#68D391" stroke="#276749" stroke-width="2"/>
+  <text x="500" y="55" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold">y(t+1)</text>
+  
+  <!-- Recurrent connections -->
+  <path d="M130 150 Q200 120 270 150" fill="none" stroke="#2C5282" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <path d="M330 150 Q400 120 470 150" fill="none" stroke="#2C5282" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Input to hidden connections -->
+  <line x1="100" y1="225" x2="100" y2="180" stroke="#C05621" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="300" y1="225" x2="300" y2="180" stroke="#C05621" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="500" y1="225" x2="500" y2="180" stroke="#C05621" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Hidden to output connections -->
+  <line x1="100" y1="120" x2="100" y2="75" stroke="#276749" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="300" y1="120" x2="300" y2="75" stroke="#276749" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="500" y1="120" x2="500" y2="75" stroke="#276749" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <!-- Arrow definition -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" />
+    </marker>
+  </defs>
+  
+  <!-- Time step labels -->
+  <text x="100" y="290" text-anchor="middle" font-family="Arial" font-size="14">t-1</text>
+  <text x="300" y="290" text-anchor="middle" font-family="Arial" font-size="14">t</text>
+  <text x="500" y="290" text-anchor="middle" font-family="Arial" font-size="14">t+1</text>
+  
+  <!-- Ellipsis to indicate sequence continuation -->
+  <text x="200" y="150" text-anchor="middle" font-family="Arial" font-size="24" font-weight="bold">...</text>
+  <text x="400" y="150" text-anchor="middle" font-family="Arial" font-size="24" font-weight="bold">...</text>
+  <text x="580" y="150" text-anchor="middle" font-family="Arial" font-size="24" font-weight="bold">...</text>
+</svg>
