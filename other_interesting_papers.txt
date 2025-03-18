@@ -4,6 +4,9 @@ tapeagents: https://arxiv.org/abs/2412.08445
 
 memory networks: https://arxiv.org/abs/1410.3916
 
+paper that first invented attention mechanism: https://arxiv.org/abs/1409.0473
 
 Sequence to Sequence Learning with Neural Networks
  https://arxiv.org/abs/1409.3215
+
+The OG: https://web.stanford.edu/class/psych209/Readings/SuttonBartoIPRLBook2ndEd.pdf
