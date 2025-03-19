@@ -6,7 +6,7 @@ use LSTMs for handwriting recognition
 - RNNs can, in principle, accept an arbitrarily large input, and LSTMs in particular can hold information for a longer period of time, allowing them to avoid vanishing or exploding gradients
 - paper deals with a particular kind of LSTM for recognizing handwritten text: multidimensional long short-term memory recurrent neural networks (MDLSTM-RNNs)
 - traditional LSTM only uses recurrence over a single dimension (in this case, the x axis of the image). MDLSTMs allow recurrence over both axes of 2D image (x and y)
-- my study game plan: learn enough about RNN's to learn what they are, then LSTMs over 1D, then LSTMs over 2D
+- my study game plan: learn enough about RNN's to learn what they are, then LSTMs over 1D, then CTC, then LSTMs over 2D
 - this paper covers the usage of these MDLSTM techniques with GPU implementations for performance
 
 REVIEW OF RNNs:
@@ -30,3 +30,24 @@ LSTMs:
 - performs state updates on both cell state (using cell candidate) and hidden state (using h_t-1 and gates)
     - Cell state update: Formula: c_t = f_t * c_t-1 + i_t * c̃_t, First part (f_t * c_t-1) forgets unneeded information, Second part (i_t * c̃_t) adds new information
     - Hidden State Update, Formula: h_t = o_t * tanh(c_t). Filtered version of the cell state processed through the output gate. This becomes the output for the current time step and part of the input for the next time step
+
+Connectionist Temporal Classification (CTC):
+- used for tasks where temporal relation between input and output aren't clear (speech recognition, handwriting recognition), or where inputs need to be of variable length
+- to achieve this, CTC uses special "blank" characters, representing no character
+- it also applies "path collapsing", where multiple consecutive characters outputted by the model are de-duped unless separated by a blank char
+
+LSTM using CTC:
+- each vertical slice of the input image is a feature vector, so a 20 x 100 pixel grayscale image has a sequence length of 20, each of which is a 100-elem vector
+- LSTM processes these slices, with the 100-elem vector being the x_in
+- at each time step, the LSTM generates output probabilities for each char in output set, including the blank char from CTC
+- this generates an output matrix of size [20 x (alph size + 1)]
+- computing CTC loss: insert blanks (here denoted <b>), so "cat" becomes "<b>c<b>a<b>t<b>"
+- with this output, forward-backward algorithm computes probability summed over all valid alignments: valid alignment maps to the target after following 2 rules: Remove repeated characters unless separated by blank, then Remove blank symbols
+- after training, you can decode new sequences using: 
+    - Greedy Decoding: Take the most likely character at each time step, then collapse according to CTC rules
+    - Beam Search: Maintain multiple potential transcriptions and select the most probable overall
+
+MDLSTM:
+- expansion of LSTM architecture into multiple dimensional inputs (here, we use 2D for images)
+- see mermaid diagram and md-lstm-implementation.py for Claude's explanation
+- biggest question in my mind: how do we use RNN-based architectures when the input vs output sequence isn't 1 to 1? For classifying handwritten text, for example, we have an input image with handwritten words, say 20 x 100 grayscale pixels. This may map to a varying number of output chars, say 5-20, depending on the image. How do we learn the sequence then? What is the ground truth sequence value at each layer of the RNN? --> this is solved using CTC: Connectionist Temporal Classification, https://en.wikipedia.org/wiki/Connectionist_temporal_classification

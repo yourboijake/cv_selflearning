@@ -10,3 +10,5 @@ Sequence to Sequence Learning with Neural Networks
  https://arxiv.org/abs/1409.3215
 
 The OG: https://web.stanford.edu/class/psych209/Readings/SuttonBartoIPRLBook2ndEd.pdf
+
+Baidu deep speech,using RNNs for speech classification: https://arxiv.org/abs/1412.5567

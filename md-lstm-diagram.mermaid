@@ -1,0 +1,21 @@
+graph TD
+    A[Input Grid] --> B[4 Directional Scans]
+    B --> C1[Top-Left Scan]
+    B --> C2[Top-Right Scan]
+    B --> C3[Bottom-Left Scan]
+    B --> C4[Bottom-Right Scan]
+    
+    C1 --> D[Hidden State Combination]
+    C2 --> D
+    C3 --> D
+    C4 --> D
+    
+    D --> E[Output Layer]
+    
+    subgraph "Cell Details"
+        F[Input] --> G[MD-LSTM Cell]
+        H1[Hidden State 1] --> G
+        H2[Hidden State 2] --> G
+        G --> I[Output Hidden State]
+        G --> J[Output Cell State]
+    end
