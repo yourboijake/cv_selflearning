@@ -1,0 +1,6 @@
+walk through implementing CNN on mnist
+explanation of CTC loss
+explain how torch.nn.Conv2d works -> unfold, matmul, fold, bias
+understanding vla models
+Xavier normalization and sum of normal distributions
+testing out different optimizers on some common datasets
