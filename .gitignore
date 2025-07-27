@@ -5,3 +5,10 @@ tekli*
 .git/
 mnist/
 emnist/
+
+*.gz
+*.pt
+*-ubyte
+*.png
+*.out
+*.csv
