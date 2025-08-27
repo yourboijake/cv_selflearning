@@ -217,32 +217,39 @@ class MnistResNetAutoEncoder(nn.Module):
     return X_emb, X_repr
 
 class MnistResNetVAE(nn.Module):
-  def __init__(self):
+  def __init__(self, device=torch.device('cpu')):
     super(MnistResNetVAE, self).__init__()
+    self.device = device
     self.mrnae = MnistResNetAutoEncoder()
     self.resnet = nn.Sequential(*list(self.mrnae.resnet.children())[:-1])
     self.embed_mu = nn.Sequential(
       nn.Flatten(),
       nn.Linear(in_features=128, out_features=32, bias=False),
     )
-    self.embed_sig = nn.Sequential(
+    self.embed_logvar = nn.Sequential(
       nn.Flatten(),
       nn.Linear(in_features=128, out_features=32, bias=False),
     )
     self.unresnet = nn.Sequential(*list(self.mrnae.unresnet.children()))
+    self.softmax = nn.Softmax()
 
   def encode(self, X):
     X = self.resnet(X)
     emb_mu = self.embed_mu(X)
-    emb_sig = self.embed_sig(X)
-    return emb_mu, emb_sig
+    emb_logvar = self.embed_logvar(X)
+    return emb_mu, emb_logvar
+  
+  def reparameterization(self, emb_mu, emb_logvar):
+    std = torch.exp(0.5 * emb_logvar)
+    eps = torch.randn_like(std)
+    return emb_mu + eps * std
     
   def decode(self, sample):
     return self.unresnet(sample)
   
   def forward(self, X):
-    emb_mu, emb_sig = self.encode(X)
-    eps = torch.randn(size=(32,))
-    sampled = emb_mu + emb_sig * eps
-    X_repr = self.decode(sampled)
-    return emb_mu, emb_sig, sampled, X_repr
+    emb_mu, emb_logvar = self.encode(X)
+    reparam = self.reparameterization(emb_mu, emb_logvar)
+    X_repr = self.decode(reparam)
+    #X_repr = self.softmax(X_repr)
+    return emb_mu, emb_logvar, reparam, X_repr
